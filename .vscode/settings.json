@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "authjwt",
+        "orjson",
+        "ormar",
+        "psycopg",
+        "pydantic",
+        "uvicorn"
+    ]
+}
