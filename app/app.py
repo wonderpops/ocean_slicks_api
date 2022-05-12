@@ -10,7 +10,7 @@ from fastapi.security import OAuth2PasswordBearer
 import time
 from app.models import *
 
-ACCESS_TOKEN_EXPIRE_SECONDS = 1800
+ACCESS_TOKEN_EXPIRE_SECONDS = 180
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -94,7 +94,8 @@ def refresh(authorize: AuthJWT = Depends()):
 
     current_user = authorize.get_jwt_subject()
     new_access_token = authorize.create_access_token(subject=current_user)
-    return {"access_token": new_access_token, "expires_at": round(time.time() + ACCESS_TOKEN_EXPIRE_SECONDS)}
+    refresh_token = authorize.create_refresh_token(subject=current_user)
+    return {"access_token": new_access_token, "refresh_token": refresh_token, "expires_at": round(time.time() + ACCESS_TOKEN_EXPIRE_SECONDS)}
 
 
 @app.post('/signup', response_model=User)
