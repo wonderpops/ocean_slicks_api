@@ -13,12 +13,17 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
   api:
-    build: ./ocean_slicks_api
+    build: ./api
     ports:
       - '5002:80'
+    environment:
+      - API_SECRET_KEY=${API_SECRET_KEY} 
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ./users-images:/ocean_slicks_api/users-images
-      - ./ocean_slicks_api/alembic:/ocean_slicks_api/alembic
+      - ./users-images:/api/users-images
+      - ./api/alembic:/api/alembic
     links:
       - 'db'
 volumes:

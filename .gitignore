@@ -129,5 +129,8 @@ dmypy.json
 .pyre/
 
 # Folders
-/users-images/
+/users-images
 /pgdata
+/api/.vscode
+/api/alembic/README
+/.vscode
