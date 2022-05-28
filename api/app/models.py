@@ -43,6 +43,7 @@ class Post(ormar.Model):
     user: User = ormar.ForeignKey(User)
     title: str = ormar.String(max_length=30)
     descryption: Text = ormar.Text(max_length=500)
+    created_at: datetime.datetime = ormar.DateTime(default=datetime.datetime.utcnow())
 
 
 class Image(ormar.Model):

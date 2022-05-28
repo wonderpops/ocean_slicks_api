@@ -145,7 +145,7 @@ async def get_image_data(id: int):
     
     return image_data
 
-requested_post = Post.get_pydantic(exclude={'user'})
+requested_post = Post.get_pydantic(exclude={'user', 'created_at'})
 response_post = Post.get_pydantic(exclude={'user': {'email','disabled','hashed_password'}, 'images': {'post'}})
 
 @app.post("/add_post")
