@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+  api:
+    build: ./ocean_slicks_api
+    ports:
+      - '5002:80'
+    volumes:
+      - ./users-images:/ocean_slicks_api/users-images
+      - ./ocean_slicks_api/alembic:/ocean_slicks_api/alembic
+    links:
+      - 'db'
+volumes:
+  db:
+    driver: local
