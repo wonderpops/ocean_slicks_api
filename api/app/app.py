@@ -171,6 +171,16 @@ async def get_all_posts():
     return posts
 
 
+@app.get("/get_posts_in_bounds", response_model=List[response_post])
+async def get_posts_in_bounds(min_lat: float, min_lng: float, max_lat: float, max_lng: float):
+    response_posts = []
+    posts = await Post.objects.select_all(follow=False).order_by("-id").all() 
+    for post in posts:
+        if post.images[0].latitude > min_lat and  post.images[0].latitude < max_lat and post.images[0].longitude > min_lng and post.images[0].longitude < max_lng:
+            response_posts.append(post)
+    return response_posts
+
+
 @app.get("/get_post", response_model=response_post)
 async def get_post_by_id(id: int):
     post = await Post.objects.select_all(follow=True).get(id=id)
